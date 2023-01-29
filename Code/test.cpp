@@ -1,8 +1,10 @@
 #include<iostream>
-#include "Model/Object.h"
+#include "Model/Predicate.h"
 
 int main()
 {
     Object obj("object1");
-    std::cout << obj.get_name() << std::endl;
+    Object obj2("object2");
+    Predicate pr1("mypredicate", {obj, obj2});
+    std::cout << pr1.get_prehash() << " " << pr1.print() << std::endl;
 }
