@@ -3,6 +3,7 @@
 #include "Model/Predicate.h"
 #include "Model/State.h"
 #include "Model/Action.h"
+#include "Utils/SetUtils.h"
 
 int main()
 {
@@ -15,6 +16,9 @@ int main()
     Predicate pr2("stack", {obj2, obj4});
     Predicate pr3("attach", {obj1, obj3, obj2});
     Action a(pr, {pr}, {}, {pr, pr2}, {pr3});
-    State state(NULL, a.get_action_predicate(), {pr}, {pr3});
-    std::cout << a.is_relevant(state) << std::endl;
+    State state(NULL, a.get_action_predicate(), {}, {});
+    std::set<Predicate> first = {pr, pr2, pr3};
+    std::set<Predicate> second = {pr2};
+    std::set<Predicate> difference = SetUtils::difference(first, second);
+    std::cout << "DONE!" << std::endl;
 }
