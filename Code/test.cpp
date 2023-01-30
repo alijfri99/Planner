@@ -4,6 +4,7 @@
 #include "Model/State.h"
 #include "Model/Action.h"
 #include "Utils/SetUtils.h"
+#include "Domains/TireDomain.h"
 
 int main()
 {
@@ -23,5 +24,11 @@ int main()
     std::set<Predicate> myunion = SetUtils::set_union(first, second);
     State result = a.regress(&state);
     bool hmm = a.is_relevant(state);
+    TireDomain tire_domain;
+    for(Action a : tire_domain.get_actions())
+    {
+        std::cout << a.get_action_predicate().print() << std::endl;
+    }
+    std::cout << "Action size: " << tire_domain.get_actions().size() << std::endl;
     std::cout << "DONE!" << std::endl;
 }

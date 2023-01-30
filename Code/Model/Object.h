@@ -8,6 +8,7 @@ private:
     std::string name;
 public:
     Object(std::string name);
+    Object() = default;
     std::string get_name() const;
 };
 

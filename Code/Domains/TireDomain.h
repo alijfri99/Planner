@@ -7,7 +7,7 @@ class TireDomain : private Domain
 public:
     TireDomain();
     std::string get_name() const;
-    std::unordered_map<std::string, Action> get_actions() const;
+    std::list<Action> get_actions() const;
 };
 
 #endif
