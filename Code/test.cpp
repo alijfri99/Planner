@@ -17,8 +17,9 @@ int main()
     Predicate pr3("attach", {obj1, obj3, obj2});
     Action a(pr, {pr}, {}, {pr, pr2}, {pr3});
     State state(NULL, a.get_action_predicate(), {}, {});
-    std::set<Predicate> first = {pr, pr2, pr3};
-    std::set<Predicate> second = {pr2};
+    std::set<Predicate> first = {pr, pr2};
+    std::set<Predicate> second = {pr2, pr3};
     std::set<Predicate> difference = SetUtils::difference(first, second);
+    std::set<Predicate> myunion = SetUtils::set_union(first, second);
     std::cout << "DONE!" << std::endl;
 }
