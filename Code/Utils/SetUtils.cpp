@@ -33,6 +33,7 @@ std::set<Predicate> SetUtils::difference(std::set<Predicate> first, const std::s
         if(*first_iterator == *second_iterator)
         {
             first.erase(first_iterator++);
+            second_iterator++;
         }
         else if(*first_iterator < *second_iterator)
         {
