@@ -31,7 +31,7 @@ bool Action::is_relevant(const State &state) const
     return((this->is_unified(state)) && !(this->is_conflicting(state)));
 }
 
-State Action::regress(State *const state) const
+State Action::regress(State * const state) const
 {
     std::set<Predicate> result_positive_literals = SetUtils::set_union(
         SetUtils::difference(state->get_positive_literals(), this->add_list), this->positive_preconditions
