@@ -16,8 +16,9 @@ private:
     bool is_conflicting(const State &state) const;
 public:
     Action(Predicate action_predicate, std::set<Predicate> positive_preconditions, std::set<Predicate> negative_preconditions, std::set<Predicate> add_list, std::set<Predicate> delete_list);
-    Predicate get_action_predicate();
+    Predicate get_action_predicate() const;
     bool is_relevant(const State &state) const;
+    State regress(State *const state) const;
 };
 
 #endif

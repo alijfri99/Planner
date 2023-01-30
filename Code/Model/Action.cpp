@@ -9,7 +9,7 @@ Action::Action(Predicate action_predicate, std::set<Predicate> positive_precondi
     this->delete_list = delete_list;
 }
 
-Predicate Action::get_action_predicate()
+Predicate Action::get_action_predicate() const
 {
     return this->action_predicate;
 }
@@ -29,4 +29,18 @@ bool Action::is_conflicting(const State &state) const
 bool Action::is_relevant(const State &state) const
 {
     return((this->is_unified(state)) && !(this->is_conflicting(state)));
+}
+
+State Action::regress(State *const state) const
+{
+    std::set<Predicate> result_positive_literals = SetUtils::set_union(
+        SetUtils::difference(state->get_positive_literals(), this->add_list), this->positive_preconditions
+    );
+    
+    std::set<Predicate> result_negative_literals = SetUtils::set_union(
+        SetUtils::difference(state->get_negative_literals(), this->delete_list), this->negative_preconditions
+    );
+
+    State result(state, this->get_action_predicate(), result_positive_literals, result_negative_literals);
+    return result;
 }
