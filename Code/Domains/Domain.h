@@ -8,7 +8,6 @@ class Domain
 {
 protected:
     std::string name;
-    std::unordered_map<std::string, Predicate> predicates;
     std::unordered_map<std::string, Action> actions;
 };
 
