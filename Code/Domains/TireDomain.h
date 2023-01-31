@@ -2,7 +2,7 @@
 #define TIREDOMAIN_H
 #include "Domain.h"
 
-class TireDomain : private Domain
+class TireDomain : public Domain
 {
 public:
     TireDomain();

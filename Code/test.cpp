@@ -1,34 +1,15 @@
 #include<iostream>
-#include "Model/Object.h"
 #include "Model/Predicate.h"
+#include "Utils/Constants.h"
 #include "Model/State.h"
-#include "Model/Action.h"
-#include "Utils/SetUtils.h"
-#include "Domains/TireDomain.h"
 
 int main()
 {
-    Object obj1("obj1");
-    Object obj2("obj2");
-    Object obj3("obj3");
-    Object obj4("d");
-
-    Predicate pr("mypredicate1", {obj1, obj2, obj3, obj4});
-    Predicate pr2("stack", {obj2, obj4});
-    Predicate pr3("attach", {obj1, obj3, obj2});
-    Action a(pr, {}, {pr2}, {pr, pr3}, {pr3});
-    State state(NULL, a.get_action_predicate(), {pr}, {pr3});
-    std::set<Predicate> first = {pr3, pr2, pr};
-    std::set<Predicate> second = {pr2};
-    std::set<Predicate> difference = SetUtils::difference(first, second);
-    std::set<Predicate> myunion = SetUtils::set_union(first, second);
-    State result = a.regress(&state);
-    bool hmm = a.is_relevant(state);
-    TireDomain tire_domain;
-    for(Action a : tire_domain.get_actions())
-    {
-        std::cout << a.get_action_predicate().print() << std::endl;
-    }
-    std::cout << "Action size: " << tire_domain.get_actions().size() << std::endl;
+    State *s;
+    s = new State(NULL, "Stack(A, B)", {new Predicate(1, {1, 2, 3}), new Predicate(2, {1, 3, 4})}, 
+    {new Predicate(1, {3, 5, 8}), new Predicate(2, {8, 7, 11})});
+    int a = 2;
+    delete s;
+    
     std::cout << "DONE!" << std::endl;
 }

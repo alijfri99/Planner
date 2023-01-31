@@ -1,67 +1,65 @@
 #include "State.h"
 
-State::State(State *parent, Predicate action_predicate, std::set<Predicate> positive_literals, std::set<Predicate> negative_literals)
+State::State(State *parent, std::string action_name, std::set<Predicate*> positive_literals, std::set<Predicate*> negative_literals)
 {
     this->parent = parent;
-    this->action_predicate = action_predicate;
+    this->action_name = action_name;
     this->positive_literals = positive_literals;
     this->negative_literals = negative_literals;
     this->prehash = this->compute_prehash();
 }
 
-Predicate State::get_action_predicate() const
+State::~State()
 {
-    return this->action_predicate;
+    std::set<Predicate*>::iterator positive_literals_iterator = positive_literals.begin();
+    std::set<Predicate*>::iterator negative_literals_iterator = negative_literals.begin();
+
+    while(positive_literals_iterator != positive_literals.end())
+    {
+        std::set<Predicate*>::iterator current = positive_literals_iterator;
+        positive_literals.erase(positive_literals_iterator++);
+        delete *current;
+    }
+
+    while(negative_literals_iterator != negative_literals.end())
+    {
+        std::set<Predicate*>::iterator current = negative_literals_iterator;
+        negative_literals.erase(negative_literals_iterator++);
+        delete *current;
+    }
 }
 
-std::set<Predicate> State::get_positive_literals() const
+std::string State::get_action_name() const
+{
+    return this->action_name;
+}
+
+std::set<Predicate*> State::get_positive_literals() const
 {
     return this->positive_literals;
 }
 
-std::set<Predicate> State::get_negative_literals() const
+std::set<Predicate*> State::get_negative_literals() const
 {
     return this->negative_literals;
 }
 
-std::string State::compute_prehash() const
+int State::compute_prehash()
 {
-    std::string result = "";
-    std::set<Predicate>::iterator positive_literal = positive_literals.begin();
-    std::set<Predicate>::iterator negative_literal = negative_literals.begin();
+    int result = 0;
 
-    while(positive_literal != positive_literals.end() && negative_literal != negative_literals.end())
+    for(Predicate *positive_literal : this->positive_literals)
     {
-        std::string positive_literal_prehash = positive_literal->get_prehash();
-        std::string negative_literal_prehash = negative_literal->get_prehash();
-
-        if(positive_literal_prehash <= negative_literal_prehash)
-        {
-            result += positive_literal_prehash;
-            positive_literal++;
-        }
-        else
-        {
-            result += negative_literal_prehash;
-            negative_literal++;
-        }
+        result = (result + (positive_literal->get_prehash() % Constants::prime)) % Constants::prime;
     }
 
-    while(positive_literal != positive_literals.end())
+    for(Predicate *negative_literal : this->negative_literals)
     {
-        result += positive_literal->get_prehash();
-        positive_literal++;
+        result = (result + (negative_literal->get_prehash() % Constants::prime)) % Constants::prime;
     }
-    while(negative_literal != negative_literals.end())
-    {
-        result += negative_literal->get_prehash();
-        negative_literal++;
-    }
-
-    return result;
 }
 
-std::string State::get_prehash() const
+int State::get_prehash() const
 {
     return this->prehash;
 }

@@ -4,6 +4,12 @@ Predicate::Predicate(int name, std::set<int> objects)
 {
     this->name = name;
     this->objects = objects;
+    this->prehash = this->compute_prehash();
+}
+
+Predicate::~Predicate()
+{
+    this->objects.clear();
 }
 
 int Predicate::get_name() const
@@ -14,6 +20,24 @@ int Predicate::get_name() const
 std::set<int> Predicate::get_objects() const
 {
     return this->objects;
+}
+
+int Predicate::get_prehash() const
+{
+    return this->prehash;
+}
+
+int Predicate::compute_prehash()
+{
+    int result = 0;
+    result += this->name % Constants::prime;
+
+    for(int object : this->objects)
+    {
+        result = (result + (object % Constants::prime)) % Constants::prime;
+    }
+
+    return result;
 }
 
 bool Predicate::operator == (const Predicate &other) const
@@ -67,11 +91,8 @@ bool Predicate::operator < (const Predicate &other) const
         {
             return false;
         }
-        else
-        {
-            current_iterator++;
-            other_iterator++;
-        }
+        current_iterator++;
+        other_iterator++;
     }
     
     if(current_iterator == this->objects.end() && other_iterator != other_objects.end())
