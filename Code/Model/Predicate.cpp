@@ -1,6 +1,6 @@
 #include "Predicate.h"
 
-Predicate::Predicate(const int &name, const std::set<int> &objects)
+Predicate::Predicate(int name, std::set<int> objects)
 {
     this->name = name;
     this->objects = objects;
@@ -23,13 +23,15 @@ bool Predicate::operator == (const Predicate &other) const
         return false;
     }
 
-    if(this->objects.size() != other.get_objects().size())
+    std::set<int> other_objects = other.get_objects();
+
+    if(this->objects.size() != other_objects.size())
     {
         return false;
     }
 
     std::set<int>::const_iterator current_iterator = this->objects.begin();
-    std::set<int>::const_iterator other_iterator = other.get_objects().begin();
+    std::set<int>::const_iterator other_iterator = other_objects.begin();
 
     while(current_iterator != this->objects.end())
     {
@@ -51,10 +53,11 @@ bool Predicate::operator < (const Predicate &other) const
         return this->name < other.get_name();
     }
 
+    std::set<int> other_objects = other.get_objects();
     std::set<int>::const_iterator current_iterator = this->objects.begin();
-    std::set<int>::const_iterator other_iterator = other.get_objects().begin();
+    std::set<int>::const_iterator other_iterator = other_objects.begin();
 
-    while(current_iterator != this->objects.end() && other_iterator != other.get_objects().end())
+    while(current_iterator != this->objects.end() && other_iterator != other_objects.end())
     {
         if(*current_iterator < *other_iterator)
         {
@@ -71,7 +74,7 @@ bool Predicate::operator < (const Predicate &other) const
         }
     }
     
-    if(current_iterator == this->objects.end())
+    if(current_iterator == this->objects.end() && other_iterator != other_objects.end())
     {
         return true;
     }

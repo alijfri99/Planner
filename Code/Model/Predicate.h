@@ -9,7 +9,7 @@ private:
     int name;
     std::set<int> objects;
 public:
-    Predicate(const int &name, const std::set<int> &objects);
+    Predicate(int name, std::set<int> objects);
     int get_name() const;
     std::set<int> get_objects() const;
     bool operator == (const Predicate &other) const;
