@@ -14,6 +14,7 @@ private:
     std::string compute_prehash() const;
 public:
     State(State *parent, Predicate action_predicate, std::set<Predicate> positive_literals, std::set<Predicate> negative_literals);
+    State() = default;
     Predicate get_action_predicate() const;
     std::set<Predicate> get_positive_literals() const;
     std::set<Predicate> get_negative_literals() const;
