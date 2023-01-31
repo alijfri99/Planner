@@ -13,8 +13,6 @@ int main()
 
     bool a = (p4 < p3);
 
-    std::set<Predicate> s1 = {p1, p2};
-    std::set<Predicate> s2 = {p3, p4};
-
-    std::cout << SetUtils::is_intersected(s1, s2);
+    State s(NULL, "Stack(A, B)", {p1, p2}, {p3});
+    int sa = 2;
 }

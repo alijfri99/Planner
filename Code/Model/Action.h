@@ -7,7 +7,7 @@
 class Action
 {
 private:
-    Predicate action_predicate;
+    std::string action_name;
     std::set<Predicate> positive_preconditions;
     std::set<Predicate> negative_preconditions;
     std::set<Predicate> add_list;
@@ -15,9 +15,9 @@ private:
     bool is_unified(const State &state) const;
     bool is_conflicting(const State &state) const;
 public:
-    Action(Predicate action_predicate, std::set<Predicate> positive_preconditions, std::set<Predicate> negative_preconditions, std::set<Predicate> add_list, std::set<Predicate> delete_list);
+    Action(std::string action_name, std::set<Predicate> positive_preconditions, std::set<Predicate> negative_preconditions, std::set<Predicate> add_list, std::set<Predicate> delete_list);
     Action() = default;
-    Predicate get_action_predicate() const;
+    std::string get_action_name() const;
     bool is_relevant(const State &state) const;
     State regress(State * const state) const;
 };

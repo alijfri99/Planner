@@ -1,17 +1,17 @@
 #include "Action.h"
 
-Action::Action(Predicate action_predicate, std::set<Predicate> positive_preconditions, std::set<Predicate> negative_preconditions, std::set<Predicate> add_list, std::set<Predicate> delete_list)
+Action::Action(std::string action_name, std::set<Predicate> positive_preconditions, std::set<Predicate> negative_preconditions, std::set<Predicate> add_list, std::set<Predicate> delete_list)
 {
-    this->action_predicate = action_predicate;
+    this->action_name = action_name;
     this->positive_preconditions = positive_preconditions;
     this->negative_preconditions = negative_preconditions;
     this->add_list = add_list;
     this->delete_list = delete_list;
 }
 
-Predicate Action::get_action_predicate() const
+std::string Action::get_action_name() const
 {
-    return this->action_predicate;
+    return this->action_name;
 }
 
 bool Action::is_unified(const State &state) const
@@ -41,6 +41,6 @@ State Action::regress(State * const state) const
         SetUtils::difference(state->get_negative_literals(), this->delete_list), this->negative_preconditions
     );
 
-    State result(state, this->get_action_predicate(), result_positive_literals, result_negative_literals);
+    State result(state, this->action_name, result_positive_literals, result_negative_literals);
     return result;
 }
