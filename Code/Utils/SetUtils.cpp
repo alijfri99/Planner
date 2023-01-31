@@ -1,9 +1,9 @@
 #include "SetUtils.h"
 
-bool SetUtils::is_intersected(const std::set<Predicate> &first, const std::set<Predicate> &second)
+bool SetUtils::is_intersected(const std::set<Predicate*> &first, const std::set<Predicate*> &second)
 {
-    std::set<Predicate>::const_iterator first_iterator = first.begin();
-    std::set<Predicate>::const_iterator second_iterator = second.begin();
+    std::set<Predicate*>::const_iterator first_iterator = first.begin();
+    std::set<Predicate*>::const_iterator second_iterator = second.begin();
 
     while(first_iterator != first.end() && second_iterator != second.end())
     {
@@ -23,10 +23,10 @@ bool SetUtils::is_intersected(const std::set<Predicate> &first, const std::set<P
     return false;
 }
 
-std::set<Predicate> SetUtils::difference(std::set<Predicate> first, const std::set<Predicate> &second)
+std::set<Predicate*> SetUtils::difference(std::set<Predicate*> first, const std::set<Predicate*> &second)
 {
-    std::set<Predicate>::iterator first_iterator = first.begin();
-    std::set<Predicate>::const_iterator second_iterator = second.begin();
+    std::set<Predicate*>::iterator first_iterator = first.begin();
+    std::set<Predicate*>::const_iterator second_iterator = second.begin();
 
     while(first_iterator != first.end() && second_iterator != second.end())
     {
@@ -47,12 +47,12 @@ std::set<Predicate> SetUtils::difference(std::set<Predicate> first, const std::s
     return first;
 }
 
-std::set<Predicate> SetUtils::set_union(const std::set<Predicate> &first, const std::set<Predicate> &second)
+std::set<Predicate*> SetUtils::set_union(const std::set<Predicate*> &first, const std::set<Predicate*> &second)
 {
-    std::set<Predicate> result;
-    std::set<Predicate>::const_iterator first_iterator = first.begin();
-    std::set<Predicate>::const_iterator second_iterator = second.begin();
-    std::set<Predicate>::const_iterator result_iterator = result.begin();
+    std::set<Predicate*> result;
+    std::set<Predicate*>::const_iterator first_iterator = first.begin();
+    std::set<Predicate*>::const_iterator second_iterator = second.begin();
+    std::set<Predicate*>::const_iterator result_iterator = result.begin();
 
     while(first_iterator != first.end() && second_iterator != second.end())
     {

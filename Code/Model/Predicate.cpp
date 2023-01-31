@@ -47,6 +47,11 @@ bool Predicate::operator == (const Predicate &other) const
         return false;
     }
 
+    if(this->prehash != other.get_prehash())
+    {
+        return false;
+    }
+
     std::set<int> other_objects = other.get_objects();
 
     if(this->objects.size() != other_objects.size())

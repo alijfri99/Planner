@@ -5,9 +5,9 @@
 
 namespace SetUtils
 {
-    bool is_intersected(const std::set<Predicate> &first, const std::set<Predicate> &second);
-    std::set<Predicate> difference(std::set<Predicate> first, const std::set<Predicate> &second);
-    std::set<Predicate> set_union(const std::set<Predicate> &first, const std::set<Predicate> &second);
+    bool is_intersected(const std::set<Predicate*> &first, const std::set<Predicate*> &second);
+    std::set<Predicate*> difference(std::set<Predicate*> first, const std::set<Predicate*> &second);
+    std::set<Predicate*> set_union(const std::set<Predicate*> &first, const std::set<Predicate*> &second);
 }
 
 #endif
