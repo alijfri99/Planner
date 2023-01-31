@@ -2,14 +2,19 @@
 #include "Model/Predicate.h"
 #include "Utils/Constants.h"
 #include "Model/State.h"
+#include "Utils/SetUtils.h"
 
 int main()
 {
-    {
-        State *s = new State(NULL, "Stack(A, B)", {new Predicate(1, {1, 2, 3}), new Predicate(2, {1, 3, 4})}, {new Predicate(1, {3, 5, 8}), new Predicate(2, {8, 7, 11})});
-        int a = 2;
-    }
-    
-    
-    std::cout << "DONE!" << std::endl;
+    Predicate p1(1, {1, 2, 3});
+    Predicate p2(2, {3, 4, 5});
+    Predicate p3(3, {7, 5, 2});
+    Predicate p4(1, {1, 2, 3});
+
+    bool a = (p4 < p3);
+
+    std::set<Predicate> s1 = {p1, p2};
+    std::set<Predicate> s2 = {p3, p4};
+
+    std::cout << SetUtils::is_intersected(s1, s2);
 }
