@@ -4,6 +4,7 @@
 #include "Model/State.h"
 #include "Utils/SetUtils.h"
 #include "Model/Action.h"
+#include "Domains/TireDomain.h"
 
 int main()
 {
@@ -15,5 +16,6 @@ int main()
     Action a("Attach(B, C)", {p1, p3}, {}, {p1, p2}, {});
     std::cout << a.is_relevant(s) << std::endl;
     State s2 = a.regress(&s);
-    int b = 2;
+    TireDomain t;
+    int sfsd = 2;
 }

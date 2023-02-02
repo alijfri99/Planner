@@ -15,6 +15,8 @@ protected:
 public:
     std::string get_name() const;
     std::list<Action> get_actions() const;
+    int lookup_word(const std::string &word);
+    void add_word(const std::string &word);
 };
 
 #endif
