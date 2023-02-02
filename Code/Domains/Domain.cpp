@@ -10,13 +10,9 @@ std::list<Action> Domain::get_actions() const
     return this->actions;
 }
 
-int Domain::lookup_word(const std::string &word)
+int Domain::get_word_code(const std::string &word)
 {
-    if(this->codes.find(word) != this->codes.end())
-    {
-        return this->codes[word];
-    }
-    return -1;
+    return this->codes[word];
 }
 
 void Domain::add_word(const std::string &word)
