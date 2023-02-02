@@ -5,9 +5,10 @@
 #include "../Model/Predicate.h"
 #include "../Model/State.h"
 
-class TireProblem : private Problem
+class TireProblem : public Problem
 {
-    TireProblem(Domain *domain, State initial_state, State goal_state);
+public:
+    TireProblem(Domain *domain);
 };
 
 #endif

@@ -5,6 +5,7 @@
 #include "Utils/SetUtils.h"
 #include "Model/Action.h"
 #include "Domains/TireDomain.h"
+#include "Problems/TireProblem.h"
 
 int main()
 {
@@ -15,10 +16,11 @@ int main()
     Predicate p5(1, {1, 2, 3});
     std::cout << (p1 == p1) << " " << (p1 == p5) << " " << (p1 < p2) << " " << (p3 < p2) << std::endl;
     std::cout << (p2 == p3) << std::endl;
-    State s(NULL, "Stack(A, B)", {p2}, {p3, p4});
+    State s(NULL, "", {p2}, {p3, p4});
     Action a("Attach(B, C)", {p1, p3}, {}, {p1, p2}, {});
     std::cout << a.is_relevant(s) << std::endl;
     State s2 = a.regress(&s);
-    TireDomain t;
+    Domain *tire_domain = new TireDomain();
+    TireProblem tire_problem(tire_domain);
     int sfsd = 2;
 }
