@@ -25,7 +25,7 @@ TireDomain::TireDomain()
             Predicate at_tire_location(this->codes["At"], {this->codes[tire], this->codes[location]});
             Predicate empty_location(this->codes["Empty"], {this->codes[location]});
 
-            Action remove_action(remove_action_name, {at_tire_location}, {}, {at_tire_ground, empty_location}, {});
+            Action remove_action(remove_action_name, {at_tire_location}, {}, {at_tire_ground, empty_location}, {at_tire_location});
             Action put_action(put_action_name, {at_tire_ground, empty_location}, {}, {at_tire_location}, {at_tire_ground, empty_location});
             
             this->actions.push_back(remove_action);

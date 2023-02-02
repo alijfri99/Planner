@@ -20,7 +20,6 @@ int main()
     Action a("Attach(B, C)", {p1, p3}, {}, {p1, p2}, {});
     std::cout << a.is_relevant(s) << std::endl;
     State s2 = a.regress(&s);
-    Domain *tire_domain = new TireDomain();
-    TireProblem tire_problem(tire_domain);
+    TireProblem tire_problem(new TireDomain());
     int sfsd = 2;
 }
