@@ -36,13 +36,3 @@ TireDomain::TireDomain()
     }
 
 }
-
-std::string TireDomain::get_name() const
-{
-    return this->name;
-}
-
-std::list<Action> TireDomain::get_actions() const
-{
-    return this->actions;
-}
