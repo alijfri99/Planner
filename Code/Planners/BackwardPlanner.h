@@ -10,6 +10,7 @@ class BackwardPlanner : public Planner
 public:
     BackwardPlanner(Problem *problem);
     std::list<std::string> search();
+    std::list<State> successor(State * const state);
     bool goal_test(const State &state);
 };
 

@@ -12,6 +12,30 @@ std::list<std::string> BackwardPlanner::search()
     {
         return result;
     }
+    
+    frontier.push(problem->get_initial_state());
+
+    while(!frontier.empty())
+    {
+        State current = frontier.front();
+        frontier.pop();
+    }
+}
+
+std::list<State> BackwardPlanner::successor(State * const state)
+{
+    std::list<State> result;
+
+    for(Action action : problem->get_domain()->get_actions())
+    {
+        if(action.is_relevant(*state))
+        {
+            State successor_state = action.regress(state);
+            result.push_back(successor_state);
+        }
+    }
+
+    return result;
 }
 
 bool BackwardPlanner::goal_test(const State &state)

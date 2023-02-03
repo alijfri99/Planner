@@ -28,7 +28,7 @@ int main()
     bool sub = SetUtils::is_subset(s1, s2);
     TireProblem *tire_problem = new TireProblem(new TireDomain());
     Planner *back = new BackwardPlanner(tire_problem);
-    std::list<Action> result = back->search();
+    std::list<std::string> result = back->search();
     int a = 2;
     delete back;
     int b = 3;
