@@ -75,6 +75,11 @@ bool Predicate::operator == (const Predicate &other) const
     return true;
 }
 
+bool Predicate::operator != (const Predicate &other) const
+{
+    return !(*this == other);
+}
+
 bool Predicate::operator < (const Predicate &other) const
 {
     if(this->name != other.get_name())
@@ -106,4 +111,9 @@ bool Predicate::operator < (const Predicate &other) const
     }
 
     return false;
+}
+
+bool Predicate::operator > (const Predicate &other) const
+{
+    return !(*this < other);
 }

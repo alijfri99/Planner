@@ -17,7 +17,9 @@ public:
     std::list<int> get_objects() const;
     int get_prehash() const;
     bool operator == (const Predicate &other) const;
+    bool operator != (const Predicate &other) const;
     bool operator < (const Predicate &other) const;
+    bool operator > (const Predicate &other) const;
 };
 
 #endif

@@ -3,6 +3,7 @@
 #include<list>
 #include "../Problems/Problem.h"
 #include "../Model/Action.h"
+#include "../Model/State.h"
 
 class Planner
 {
@@ -12,6 +13,7 @@ public:
     Planner(Problem *problem);
     ~Planner();
     virtual std::list<Action> search() = 0;
+    virtual bool goal_test(const State &state) = 0;
 };
 
 #endif

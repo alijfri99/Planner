@@ -23,6 +23,29 @@ bool SetUtils::is_intersected(const std::set<Predicate> &first, const std::set<P
     return false;
 }
 
+bool SetUtils::is_subset(const std::set<Predicate> &first, const std::set<Predicate> &second)
+{
+    if(first.size() > second.size())
+    {
+        return false;
+    }
+
+    std::set<Predicate>::const_iterator first_iterator = first.begin();
+    std::set<Predicate>::const_iterator second_iterator = second.begin();
+
+    while(first_iterator != first.end())
+    {
+        if(*first_iterator != *second_iterator)
+        {
+            return false;
+        }
+        first_iterator++;
+        second_iterator++;
+    }
+
+    return true;
+}
+
 std::set<Predicate> SetUtils::difference(std::set<Predicate> first, const std::set<Predicate> &second)
 {
     std::set<Predicate>::iterator first_iterator = first.begin();
