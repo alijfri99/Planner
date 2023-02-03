@@ -9,7 +9,7 @@ class BackwardPlanner : public Planner
 {
 public:
     BackwardPlanner(Problem *problem);
-    std::list<Action> search();
+    std::list<std::string> search();
     bool goal_test(const State &state);
 };
 
