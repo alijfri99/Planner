@@ -23,8 +23,8 @@ int main()
     State s2 = a.regress(&s);
     int sfsd = 2;*/
     bool hmm = p1 != p2;
-    std::set<Predicate> s1 = {p2};
-    std::set<Predicate> s2 = {p3, p2};
+    std::set<Predicate> s1 = {p1};
+    std::set<Predicate> s2 = {p3, p5};
     bool sub = SetUtils::is_subset(s1, s2);
     TireProblem *tire_problem = new TireProblem(new TireDomain());
     Planner *back = new BackwardPlanner(tire_problem);
