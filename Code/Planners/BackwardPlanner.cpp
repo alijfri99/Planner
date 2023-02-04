@@ -6,7 +6,7 @@ std::list<std::string> BackwardPlanner::search()
 {
     std::list<std::string> result;
     std::queue<State> frontier;
-    std::unordered_map<int, State> explored;
+    std::map<int, std::list<State>> explored;
     
     if(goal_test(problem->get_initial_state()))
     {
@@ -19,6 +19,19 @@ std::list<std::string> BackwardPlanner::search()
     {
         State current = frontier.front();
         frontier.pop();
+
+        if(explored.find(current.get_prehash()) != explored.end())
+        {
+            std::list<State> successor_states = successor(&current);
+
+            for(State successor_state : successor_states)
+            {
+                if(explored.find(successor_state.get_prehash()) == explored.end())
+                {
+                    
+                }
+            }
+        }
     }
 }
 

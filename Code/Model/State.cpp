@@ -30,9 +30,9 @@ std::set<Predicate> State::get_negative_literals() const
     return this->negative_literals;
 }
 
-int State::compute_prehash()
+std::size_t State::compute_prehash()
 {
-    int result = 0;
+    std::size_t result = 0;
 
     for(Predicate positive_literal : this->positive_literals)
     {
@@ -47,7 +47,12 @@ int State::compute_prehash()
     return result;
 }
 
-int State::get_prehash() const
+std::size_t State::get_prehash() const
 {
     return this->prehash;
+}
+
+std::size_t std::hash<State>::operator() (const State &state) const
+{
+    return state.get_prehash();
 }

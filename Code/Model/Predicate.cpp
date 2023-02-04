@@ -22,14 +22,14 @@ std::list<int> Predicate::get_objects() const
     return this->objects;
 }
 
-int Predicate::get_prehash() const
+std::size_t Predicate::get_prehash() const
 {
     return this->prehash;
 }
 
-int Predicate::compute_prehash()
+std::size_t Predicate::compute_prehash()
 {
-    int result = 0;
+    std::size_t result = 0;
     result += this->name % Constants::prime;
 
     for(int object : this->objects)
