@@ -15,6 +15,11 @@ State::~State()
     negative_literals.clear();
 }
 
+State* State::get_parent() const
+{
+    return parent;
+}
+
 std::string State::get_action_name() const
 {
     return this->action_name;

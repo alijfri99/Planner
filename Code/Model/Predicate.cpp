@@ -1,6 +1,6 @@
 #include "Predicate.h"
 
-Predicate::Predicate(int name, std::list<int> objects)
+Predicate::Predicate(int name, std::vector<int> objects)
 {
     this->name = name;
     this->objects = objects;
@@ -17,7 +17,7 @@ int Predicate::get_name() const
     return this->name;
 }
 
-std::list<int> Predicate::get_objects() const
+std::vector<int> Predicate::get_objects() const
 {
     return this->objects;
 }
@@ -52,27 +52,7 @@ bool Predicate::operator == (const Predicate &other) const
         return false;
     }
 
-    std::list<int> other_objects = other.get_objects();
-
-    if(this->objects.size() != other_objects.size())
-    {
-        return false;
-    }
-
-    std::list<int>::const_iterator current_iterator = this->objects.begin();
-    std::list<int>::const_iterator other_iterator = other_objects.begin();
-
-    while(current_iterator != this->objects.end())
-    {
-        if(*current_iterator != *other_iterator)
-        {
-            return false;
-        }
-        current_iterator++;
-        other_iterator++;
-    }
-
-    return true;
+    return(this->objects == other.get_objects());
 }
 
 bool Predicate::operator != (const Predicate &other) const
@@ -87,33 +67,15 @@ bool Predicate::operator < (const Predicate &other) const
         return this->name < other.get_name();
     }
 
-    std::list<int> other_objects = other.get_objects();
-    std::list<int>::const_iterator current_iterator = this->objects.begin();
-    std::list<int>::const_iterator other_iterator = other_objects.begin();
-
-    while(current_iterator != this->objects.end() && other_iterator != other_objects.end())
-    {
-        if(*current_iterator < *other_iterator)
-        {
-            return true;
-        }
-        else if(*current_iterator > *other_iterator)
-        {
-            return false;
-        }
-        current_iterator++;
-        other_iterator++;
-    }
-    
-    if(current_iterator == this->objects.end() && other_iterator != other_objects.end())
-    {
-        return true;
-    }
-
-    return false;
+    return(this->objects < other.get_objects());
 }
 
 bool Predicate::operator > (const Predicate &other) const
 {
-    return !(*this < other);
+    if(this->name != other.get_name())
+    {
+        return this->name > other.get_name();
+    }
+
+    return(this->objects > other.get_objects());
 }

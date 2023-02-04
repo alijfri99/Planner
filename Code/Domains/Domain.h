@@ -15,7 +15,7 @@ protected:
     void add_word(const std::string &word);
 public:
     std::string get_name() const;
-    std::list<Action> get_actions() const;
+    std::list<Action>& get_actions();
     int get_word_code(const std::string &word);
 };
 

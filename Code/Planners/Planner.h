@@ -12,6 +12,7 @@ protected:
     Problem *problem;
     virtual std::list<State> successor(State * const state) = 0;
     virtual bool goal_test(const State &state) = 0;
+    virtual std::list<std::string> build_solution(State *state) = 0;
 public:
     Planner(Problem *problem);
     ~Planner();
