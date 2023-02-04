@@ -1,4 +1,5 @@
 #include<iostream>
+#include<unordered_set>
 #include "Model/Predicate.h"
 #include "Utils/Constants.h"
 #include "Model/State.h"
@@ -21,8 +22,7 @@ int main()
     Action a("Attach(B, C)", {p1, p3}, {}, {p1, p2}, {});
     std::cout << a.is_relevant(s) << std::endl;
     State s2 = a.regress(&s);
-    int sfsd = 2;
-    bool hmm = p1 != p2;
+    bool sequal = (s == s2);
     /*std::set<Predicate> s1 = {p1};
     std::set<Predicate> s2 = {p3, p5};
     bool sub = SetUtils::is_subset(s1, s2);*/

@@ -52,6 +52,12 @@ std::size_t State::get_prehash() const
     return this->prehash;
 }
 
+bool State::operator== (const State &other) const
+{
+    return(this->positive_literals == other.get_positive_literals() &&
+    this->negative_literals == other.get_negative_literals());
+}
+
 std::size_t std::hash<State>::operator() (const State &state) const
 {
     return state.get_prehash();

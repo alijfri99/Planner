@@ -22,6 +22,7 @@ public:
     std::set<Predicate> get_positive_literals() const;
     std::set<Predicate> get_negative_literals() const;
     std::size_t get_prehash() const;
+    bool operator== (const State &other) const;
 };
 
 namespace std
