@@ -49,7 +49,7 @@ std::list<State> BackwardPlanner::successor(State * const state)
     std::list<State> result;
 
     Domain *domain = problem->get_domain();
-    std::list<Action> &actions = domain->get_actions();
+    std::vector<Action> actions = domain->get_actions();
 
     for(Action action : actions)
     {
@@ -71,11 +71,5 @@ bool BackwardPlanner::goal_test(const State &state)
 
 std::list<std::string> BackwardPlanner::build_solution(State *state)
 {
-    std::list<std::string> result;
-    while(state != NULL)
-    {
-        result.push_front(state->get_action_name());
-        state = state->get_parent();
-    }
-    return result;
+    std::cout << "DONE PLANNING!" << std::endl;
 }

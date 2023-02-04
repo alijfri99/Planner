@@ -10,12 +10,12 @@ class Domain
 {
 protected:
     std::string name;
-    std::list<Action> actions;
+    std::vector<Action> actions;
     std::unordered_map<std::string, int> codes;
     void add_word(const std::string &word);
 public:
     std::string get_name() const;
-    std::list<Action>& get_actions();
+    std::vector<Action> get_actions();
     int get_word_code(const std::string &word);
 };
 

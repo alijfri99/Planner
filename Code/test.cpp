@@ -32,6 +32,10 @@ int main()
     delete back;
     int b = 3;*/
 
+    Predicate p2(2, {3, 4, 5});
+    Predicate p3(3, {7, 5, 2});
+    Predicate p4(4, {7, 9, 3});
+    Predicate p5(1, {1, 2, 3});
     TireProblem *tire_problem = new TireProblem(new TireDomain());
     BackwardPlanner planner(tire_problem);
     std::cout << "GO!" << std::endl;
