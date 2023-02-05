@@ -8,12 +8,12 @@
 class BackwardPlanner : public Planner
 {
 protected:
-    std::list<State> successor(State * const state);
+    std::vector<State> successor(State * const state);
     bool goal_test(const State &state);
-    std::list<std::string> build_solution(State *state);
+    std::vector<std::string> build_solution(State *state);
 public:
     BackwardPlanner(Problem *problem);
-    std::list<std::string> search();
+    std::vector<std::string> search();
 };
 
 #endif

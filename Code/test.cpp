@@ -39,7 +39,7 @@ int main()
     TireProblem *tire_problem = new TireProblem(new TireDomain());
     BackwardPlanner planner(tire_problem);
     std::cout << "GO!" << std::endl;
-    std::list<std::string> actions = planner.search();
+    std::vector<std::string> actions = planner.search();
     std::cout << "DONE!" << std::endl;
     int sdf = 2;
 }

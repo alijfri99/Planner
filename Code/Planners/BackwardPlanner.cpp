@@ -3,11 +3,11 @@
 
 BackwardPlanner::BackwardPlanner(Problem *problem) : Planner(problem) {}
 
-std::list<std::string> BackwardPlanner::search()
+std::vector<std::string> BackwardPlanner::search()
 {
     int counter = 0;
-    std::list<std::string> result;
-    std::queue<State> frontier;
+    std::vector<std::string> result;
+    std::queue<State*> frontier;
     std::unordered_set<State> reached;
     
     if(goal_test(problem->get_goal_state()))
@@ -18,13 +18,14 @@ std::list<std::string> BackwardPlanner::search()
     frontier.push(problem->get_goal_state());
     reached.insert(problem->get_goal_state());
 
+
     while(!frontier.empty())
     {
-        State current = frontier.front();
+        State *current = frontier.front();
         frontier.pop();
         std::cout << counter++ << std::endl;
 
-        std::list<State> successor_states = successor(&current);
+        std::vector<State> successor_states = successor(&current);
 
         for(State successor_state : successor_states)
         {
@@ -44,9 +45,9 @@ std::list<std::string> BackwardPlanner::search()
     return result;
 }
 
-std::list<State> BackwardPlanner::successor(State * const state)
+std::vector<State> BackwardPlanner::successor(State * const state)
 {
-    std::list<State> result;
+    std::vector<State> result;
 
     Domain *domain = problem->get_domain();
     std::vector<Action> actions = domain->get_actions();
@@ -69,7 +70,7 @@ bool BackwardPlanner::goal_test(const State &state)
     && !SetUtils::is_intersected(state.get_negative_literals(), problem->get_initial_state().get_positive_literals()));
 }
 
-std::list<std::string> BackwardPlanner::build_solution(State *state)
+std::vector<std::string> BackwardPlanner::build_solution(State *state)
 {
     std::cout << "DONE PLANNING!" << std::endl;
 }
