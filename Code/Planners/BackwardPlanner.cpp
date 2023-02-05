@@ -5,7 +5,7 @@ BackwardPlanner::BackwardPlanner(Problem *problem) : Planner(problem) {}
 
 std::vector<std::string> BackwardPlanner::search()
 {
-    int state_index = 0;
+    int total_state_index = 0;
     std::vector<std::string> result;
     std::queue<int> frontier;
     std::unordered_set<State> reached;
@@ -16,7 +16,7 @@ std::vector<std::string> BackwardPlanner::search()
         return result;
     }
     
-    frontier.push(state_index);
+    frontier.push(total_state_index);
     reached.insert(problem->get_goal_state());
     all_states.push_back(problem->get_goal_state());
 
@@ -25,21 +25,21 @@ std::vector<std::string> BackwardPlanner::search()
     {
         int current_state_index = frontier.front();
         frontier.pop();
-        State current_state = all_states[state_index];
+        State current_state = all_states[current_state_index];
 
-        std::vector<State> successor_states = successor(current_state, state_index);
+        std::vector<State> successor_states = successor(current_state, current_state_index);
 
         for(State successor_state : successor_states)
         {
             if(goal_test(successor_state))
             {
-                result = build_solution(successor_state);
+                result = build_solution(successor_state, all_states);
                 return result;
             }
             if(reached.find(successor_state) == reached.end())
             {
-                state_index++;
-                frontier.push(state_index);
+                total_state_index++;
+                frontier.push(total_state_index);
                 reached.insert(successor_state);
                 all_states.push_back(successor_state);
             }
@@ -49,7 +49,7 @@ std::vector<std::string> BackwardPlanner::search()
     return result;
 }
 
-std::vector<State> BackwardPlanner::successor(const State &state, const int &state_index)
+std::vector<State> BackwardPlanner::successor(const State &state, const int &current_state_index)
 {
     std::vector<State> result;
 
@@ -58,7 +58,7 @@ std::vector<State> BackwardPlanner::successor(const State &state, const int &sta
         if(action.is_relevant(state))
         {
             State successor_state = action.regress(state);
-            successor_state.set_parent_index(state_index);
+            successor_state.set_parent_index(current_state_index);
             result.push_back(successor_state);
         }
     }
@@ -72,7 +72,7 @@ bool BackwardPlanner::goal_test(const State &state)
     && !SetUtils::is_intersected(state.get_negative_literals(), problem->get_initial_state().get_positive_literals()));
 }
 
-std::vector<std::string> BackwardPlanner::build_solution(State &state)
+std::vector<std::string> BackwardPlanner::build_solution(State &state, const std::vector<State> &all_states)
 {
     std::cout << "DONE PLANNING!" << std::endl;
 }
