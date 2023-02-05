@@ -74,5 +74,11 @@ bool BackwardPlanner::goal_test(const State &state)
 
 std::vector<std::string> BackwardPlanner::build_solution(State &state, const std::vector<State> &all_states)
 {
-    std::cout << "DONE PLANNING!" << std::endl;
+    std::vector<std::string> result;
+    while(state.get_parent_index() != -1)
+    {
+        result.push_back(state.get_action_name());
+        state = all_states[state.get_parent_index()];
+    }
+    return result;
 }
