@@ -1,8 +1,7 @@
 #include "State.h"
 
-State::State(int parent_index, std::string action_name, std::set<Predicate> positive_literals, std::set<Predicate> negative_literals)
+State::State(std::string action_name, std::set<Predicate> positive_literals, std::set<Predicate> negative_literals)
 {
-    this->parent_index = parent_index;
     this->action_name = action_name;
     this->positive_literals = positive_literals;
     this->negative_literals = negative_literals;
@@ -13,6 +12,11 @@ State::~State()
 {
     positive_literals.clear();
     negative_literals.clear();
+}
+
+void State::set_parent_index(int parent_index)
+{
+    this->parent_index = parent_index;
 }
 
 int State::get_parent_index() const

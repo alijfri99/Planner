@@ -15,9 +15,10 @@ private:
     std::size_t prehash;
     std::size_t compute_prehash();
 public:
-    State(int parent_index, std::string action_name, std::set<Predicate> positive_literals, std::set<Predicate> negative_literals);
+    State(std::string action_name, std::set<Predicate> positive_literals, std::set<Predicate> negative_literals);
     State() = default;
     ~State();
+    void set_parent_index(int parent_index);
     int get_parent_index() const;
     std::string get_action_name() const;
     std::set<Predicate> get_positive_literals() const;

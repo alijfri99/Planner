@@ -5,39 +5,43 @@ BackwardPlanner::BackwardPlanner(Problem *problem) : Planner(problem) {}
 
 std::vector<std::string> BackwardPlanner::search()
 {
-    int counter = 0;
+    int state_index = 0;
     std::vector<std::string> result;
-    std::queue<State*> frontier;
+    std::queue<int> frontier;
     std::unordered_set<State> reached;
+    std::vector<State> all_states;
     
     if(goal_test(problem->get_goal_state()))
     {
         return result;
     }
     
-    frontier.push(problem->get_goal_state());
+    frontier.push(state_index);
     reached.insert(problem->get_goal_state());
+    all_states.push_back(problem->get_goal_state());
 
 
     while(!frontier.empty())
     {
-        State *current = frontier.front();
+        int current_state_index = frontier.front();
         frontier.pop();
-        std::cout << counter++ << std::endl;
+        State current_state = all_states[state_index];
 
-        std::vector<State> successor_states = successor(&current);
+        std::vector<State> successor_states = successor(current_state, state_index);
 
         for(State successor_state : successor_states)
         {
             if(goal_test(successor_state))
             {
-                result = build_solution(&successor_state);
+                result = build_solution(successor_state);
                 return result;
             }
             if(reached.find(successor_state) == reached.end())
             {
-                frontier.push(successor_state);
+                state_index++;
+                frontier.push(state_index);
                 reached.insert(successor_state);
+                all_states.push_back(successor_state);
             }
         }
     }
@@ -45,18 +49,16 @@ std::vector<std::string> BackwardPlanner::search()
     return result;
 }
 
-std::vector<State> BackwardPlanner::successor(State * const state)
+std::vector<State> BackwardPlanner::successor(const State &state, const int &state_index)
 {
     std::vector<State> result;
 
-    Domain *domain = problem->get_domain();
-    std::vector<Action> actions = domain->get_actions();
-
-    for(Action action : actions)
+    for(Action action : problem->get_domain()->get_actions())
     {
-        if(action.is_relevant(*state))
+        if(action.is_relevant(state))
         {
             State successor_state = action.regress(state);
+            successor_state.set_parent_index(state_index);
             result.push_back(successor_state);
         }
     }
@@ -70,7 +72,7 @@ bool BackwardPlanner::goal_test(const State &state)
     && !SetUtils::is_intersected(state.get_negative_literals(), problem->get_initial_state().get_positive_literals()));
 }
 
-std::vector<std::string> BackwardPlanner::build_solution(State *state)
+std::vector<std::string> BackwardPlanner::build_solution(State &state)
 {
     std::cout << "DONE PLANNING!" << std::endl;
 }

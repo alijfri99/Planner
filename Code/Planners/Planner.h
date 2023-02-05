@@ -10,9 +10,9 @@ class Planner
 {
 protected:
     Problem *problem;
-    virtual std::vector<State> successor(State * const state) = 0;
+    virtual std::vector<State> successor(const State &state, const int &state_index) = 0;
     virtual bool goal_test(const State &state) = 0;
-    virtual std::vector<std::string> build_solution(State *state) = 0;
+    virtual std::vector<std::string> build_solution(State &state) = 0;
 public:
     Planner(Problem *problem);
     ~Planner();

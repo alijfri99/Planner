@@ -31,16 +31,16 @@ bool Action::is_relevant(const State &state) const
     return((this->is_unified(state)) && !(this->is_conflicting(state)));
 }
 
-State Action::regress(State * const state) const
+State Action::regress(const State &state) const
 {
     std::set<Predicate> result_positive_literals = SetUtils::set_union(
-        SetUtils::difference(state->get_positive_literals(), this->add_list), this->positive_preconditions
+        SetUtils::difference(state.get_positive_literals(), this->add_list), this->positive_preconditions
     );
     
     std::set<Predicate> result_negative_literals = SetUtils::set_union(
-        SetUtils::difference(state->get_negative_literals(), this->delete_list), this->negative_preconditions
+        SetUtils::difference(state.get_negative_literals(), this->delete_list), this->negative_preconditions
     );
 
-    State result(state, this->action_name, result_positive_literals, result_negative_literals);
+    State result(this->action_name, result_positive_literals, result_negative_literals);
     return result;
 }

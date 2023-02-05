@@ -19,7 +19,7 @@ public:
     Action() = default;
     std::string get_action_name() const;
     bool is_relevant(const State &state) const;
-    State regress(State * const state) const;
+    State regress(const State &state) const;
 };
 
 #endif
