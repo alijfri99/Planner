@@ -1,6 +1,6 @@
 #ifndef DOMAIN_H
 #define DOMAIN_H
-#include<list>
+#include<vector>
 #include<unordered_map>
 #include<string>
 #include "../Model/Predicate.h"

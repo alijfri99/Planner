@@ -4,8 +4,8 @@ TireDomain::TireDomain()
 {
     this->name = "Tire Domain";
 
-    std::list<std::string> tires = {"Flat", "Spare"};
-    std::list<std::string> locations = {"Axle", "Trunk"};
+    std::vector<std::string> tires = {"Flat", "Spare"};
+    std::vector<std::string> locations = {"Axle", "Trunk"};
     std::unordered_map<std::string, std::string> other;
 
     other["Flat"] = "Spare";

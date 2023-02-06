@@ -8,6 +8,8 @@
 #include "Domains/TireDomain.h"
 #include "Problems/TireProblem.h"
 #include "Planners/BackwardPlanner.h"
+#include "Domains/LinkRepeatDomain.h"
+#include "Problems/LinkRepeatProblem.h"
 
 int main()
 {
@@ -37,9 +39,15 @@ int main()
     Predicate p4(4, {7, 9, 3});
     Predicate p5(1, {1, 2, 3});
     TireProblem *tire_problem = new TireProblem(new TireDomain());
-    BackwardPlanner planner(tire_problem);
+    LinkRepeatDomain lr(10);
+    LinkRepeatProblem *link_repeat_problem = new LinkRepeatProblem(new LinkRepeatDomain(100));
+    BackwardPlanner planner(link_repeat_problem);
     std::cout << "GO!" << std::endl;
     std::vector<std::string> actions = planner.search();
+    for(int i = 0; i < actions.size(); i++)
+    {
+        std::cout << std::to_string(i + 1) << ". " << actions[i] << std::endl;
+    }
     std::cout << "DONE!" << std::endl;
     int sdf = 2;
 }
