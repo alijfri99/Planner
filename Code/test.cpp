@@ -40,7 +40,7 @@ int main()
     Predicate p5(1, {1, 2, 3});
     TireProblem *tire_problem = new TireProblem(new TireDomain());
     LinkRepeatDomain lr(10);
-    LinkRepeatProblem *link_repeat_problem = new LinkRepeatProblem(new LinkRepeatDomain(100));
+    LinkRepeatProblem *link_repeat_problem = new LinkRepeatProblem(new LinkRepeatDomain(2000));
     BackwardPlanner planner(link_repeat_problem);
     std::cout << "GO!" << std::endl;
     std::vector<std::string> actions = planner.search();

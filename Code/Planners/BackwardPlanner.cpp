@@ -75,7 +75,6 @@ bool BackwardPlanner::goal_test(const State &state)
 std::vector<std::string> BackwardPlanner::build_solution(State &state, const std::vector<State> &all_states)
 {
     std::vector<std::string> result;
-    std::size_t blammo = all_states.size();
     while(state.get_parent_index() != -1)
     {
         result.push_back(state.get_action_name());
