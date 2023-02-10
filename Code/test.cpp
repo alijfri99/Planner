@@ -35,7 +35,7 @@ int main()
     Predicate p4(4, {7, 9, 3});
     Predicate p5(1, {1, 2, 3});
     std::cout << "GO!" << std::endl;
-    Domain *depots = new DepotsDomain(1000, 1000, 1000);
+    Domain *depots = new DepotsDomain(10, 10, 10);
     std::cout << "DONE!" << std::endl;
     int sdf = 2;
 }

@@ -6,15 +6,15 @@ DepotsDomain::DepotsDomain(int number_of_crates, int number_of_locations, int nu
     this->number_of_locations = number_of_locations;
     this->number_of_trucks = number_of_trucks;
 
-    std::unordered_map<std::string, std::vector<std::string>> object_containers;
-    object_containers["crates"];
-    object_containers["locations"];
-    object_containers["hoists"];
-    object_containers["pallets"];
-    object_containers["trucks"];
+    this->object_containers["crates"];
+    this->object_containers["locations"];
+    this->object_containers["hoists"];
+    this->object_containers["pallets"];
+    this->object_containers["trucks"];
 
     define_predicate_names();
-    define_objects(object_containers);
+    define_objects();
+    define_actions();
 }
 
 void DepotsDomain::define_predicate_names()
@@ -27,13 +27,13 @@ void DepotsDomain::define_predicate_names()
     add_word("Clear");
 }
 
-void DepotsDomain::define_objects(std::unordered_map<std::string, std::vector<std::string>> &object_containers)
+void DepotsDomain::define_objects()
 {
     for(int i = 1; i <= number_of_crates; i++)
     {
         std::string crate_string = "Crate" + std::to_string(i);
         add_word(crate_string);
-        object_containers["crates"].push_back(crate_string);
+        this->object_containers["crates"].push_back(crate_string);
     }
 
     for(int i = 1; i <= number_of_locations; i++)
@@ -46,9 +46,9 @@ void DepotsDomain::define_objects(std::unordered_map<std::string, std::vector<st
         add_word(hoist_string);
         add_word(pallet_string);
 
-        object_containers["locations"].push_back(location_string);
-        object_containers["hoists"].push_back(hoist_string);
-        object_containers["pallets"].push_back(pallet_string);
+        this->object_containers["locations"].push_back(location_string);
+        this->object_containers["hoists"].push_back(hoist_string);
+        this->object_containers["pallets"].push_back(pallet_string);
 
         Predicate at_hoist_location(this->codes["At"], {this->codes[hoist_string], this->codes[location_string]});
         Predicate at_pallet_location(this->codes["At"], {this->codes[pallet_string], this->codes[location_string]});
@@ -61,11 +61,32 @@ void DepotsDomain::define_objects(std::unordered_map<std::string, std::vector<st
     {
         std::string truck_string = "Truck" + std::to_string(i);
         add_word(truck_string);
-        object_containers["trucks"].push_back(truck_string);
+        this->object_containers["trucks"].push_back(truck_string);
     }
 }
 
-void DepotsDomain::define_actions(std::unordered_map<std::string, std::vector<std::string>> &object_containers)
+void DepotsDomain::define_actions()
 {
-    
+    define_drive_actions();
+}
+
+void DepotsDomain::define_drive_actions()
+{
+    for(std::string truck : this->object_containers["trucks"])
+    {
+        for(std::string location_1 : this->object_containers["locations"])
+        {
+            for(std::string location_2 : this->object_containers["locations"])
+            {
+                if(location_1 != location_2)
+                {
+                    std::string drive_action_name = "Drive(" + truck + ", " + location_1 + ", " + location_2 + ")";
+                    Predicate at_truck_location_1(this->codes["At"], {this->codes[truck], this->codes[location_1]});
+                    Predicate at_truck_location_2(this->codes["At"], {this->codes[truck], this->codes[location_2]});
+                    Action drive_action(drive_action_name, {at_truck_location_1}, {}, {at_truck_location_2}, {at_truck_location_1});
+                    this->actions.push_back(drive_action);
+                }
+            }
+        }
+    }
 }
