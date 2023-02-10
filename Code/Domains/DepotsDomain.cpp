@@ -9,8 +9,8 @@ DepotsDomain::DepotsDomain(int number_of_crates, int number_of_locations, int nu
     this->object_containers["crates"];
     this->object_containers["locations"];
     this->object_containers["hoists"];
-    this->object_containers["pallets"];
     this->object_containers["trucks"];
+    this->object_containers["pallets"];
 
     define_predicate_names();
     define_objects();
@@ -68,6 +68,7 @@ void DepotsDomain::define_objects()
 void DepotsDomain::define_actions()
 {
     define_drive_actions();
+    define_lift_actions();
 }
 
 void DepotsDomain::define_drive_actions()
@@ -80,13 +81,64 @@ void DepotsDomain::define_drive_actions()
             {
                 if(location_1 != location_2)
                 {
-                    std::string drive_action_name = "Drive(" + truck + ", " + location_1 + ", " + location_2 + ")";
-                    Predicate at_truck_location_1(this->codes["At"], {this->codes[truck], this->codes[location_1]});
-                    Predicate at_truck_location_2(this->codes["At"], {this->codes[truck], this->codes[location_2]});
-                    Action drive_action(drive_action_name, {at_truck_location_1}, {}, {at_truck_location_2}, {at_truck_location_1});
-                    this->actions.push_back(drive_action);
+                    add_drive_action(truck, location_1, location_2);
                 }
             }
         }
     }
+}
+
+void DepotsDomain::define_lift_actions()
+{
+    for(std::string hoist : this->object_containers["hoists"])
+    {
+        for(std::string crate : this->object_containers["crates"])
+        {
+            for(std::string surface : this->object_containers["crates"])
+            {
+                if(crate == surface)
+                {
+                    continue;
+                }
+                for(std::string location : this->object_containers["locations"])
+                {
+                    add_lift_action(hoist, crate, surface, location);
+                }
+            }
+            for(std::string surface : this->object_containers["pallets"])
+            {
+                for(std::string location : this->object_containers["locations"])
+                {
+                    add_lift_action(hoist, crate, surface, location);
+                }
+            }
+        }
+    }
+}
+
+void DepotsDomain::add_drive_action(std::string &truck, std::string &location_1, std::string &location_2)
+{
+    std::string drive_action_name = "Drive(" + truck + ", " + location_1 + ", " + location_2 + ")";
+    Predicate at_truck_location_1(this->codes["At"], {this->codes[truck], this->codes[location_1]});
+    Predicate at_truck_location_2(this->codes["At"], {this->codes[truck], this->codes[location_2]});
+    Action drive_action(drive_action_name, {at_truck_location_1}, {}, {at_truck_location_2}, {at_truck_location_1});
+    this->actions.push_back(drive_action);
+}
+
+void DepotsDomain::add_lift_action(std::string &hoist, std::string &crate, std::string &surface, std::string &location)
+{
+    std::string lift_action_name = "Lift(" + hoist + ", " + crate + ", " + surface + ", " + location + ")";
+                    
+    Predicate at_hoist_location(this->codes["At"], {this->codes[hoist], this->codes[location]});
+    Predicate available_hoist(this->codes["Available"], {this->codes[hoist]});
+    Predicate at_crate_location(this->codes["At"], {this->codes[crate], this->codes[location]});
+    Predicate on_crate_surface(this->codes["On"], {this->codes[crate], this->codes[surface]});
+    Predicate clear_crate(this->codes["Clear"], {this->codes[crate]});
+    Predicate clear_surface(this->codes["Clear"], {this->codes[surface]});
+    Predicate lifting_hoist_crate(this->codes["Lifting"], {this->codes[hoist], this->codes[crate]});
+
+    Action lift_action(lift_action_name, {at_hoist_location, available_hoist, at_crate_location, clear_crate}, {},
+    {lifting_hoist_crate, clear_surface}, {at_crate_location, clear_crate, available_hoist, on_crate_surface});
+    
+    this->actions.push_back(lift_action);
 }

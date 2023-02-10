@@ -4,6 +4,10 @@
 
 class TireDomain : public Domain
 {
+private:
+    void define_predicate_names();
+    void define_objects();
+    void define_actions();
 public:
     TireDomain();
 };
