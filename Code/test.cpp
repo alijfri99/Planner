@@ -10,6 +10,7 @@
 #include "Planners/BackwardPlanner.h"
 #include "Domains/LinkRepeatDomain.h"
 #include "Problems/LinkRepeatProblem.h"
+#include "Domains/DepotsDomain.h"
 
 int main()
 {
@@ -43,6 +44,7 @@ int main()
     LinkRepeatProblem *link_repeat_problem = new LinkRepeatProblem(new LinkRepeatDomain(2000));
     BackwardPlanner planner(link_repeat_problem);
     std::cout << "GO!" << std::endl;
+    Domain *depots = new DepotsDomain(1000, 1000, 1000);
     std::vector<std::string> actions = planner.search();
     for(int i = 0; i < actions.size(); i++)
     {
