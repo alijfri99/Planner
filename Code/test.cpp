@@ -5,11 +5,6 @@
 #include "Model/State.h"
 #include "Utils/SetUtils.h"
 #include "Model/Action.h"
-#include "Domains/TireDomain.h"
-#include "Problems/TireProblem.h"
-#include "Planners/BackwardPlanner.h"
-#include "Domains/LinkRepeatDomain.h"
-#include "Problems/LinkRepeatProblem.h"
 #include "Domains/DepotsDomain.h"
 
 int main()
@@ -39,17 +34,8 @@ int main()
     Predicate p3(3, {7, 5, 2});
     Predicate p4(4, {7, 9, 3});
     Predicate p5(1, {1, 2, 3});
-    TireProblem *tire_problem = new TireProblem(new TireDomain());
-    LinkRepeatDomain lr(10);
-    LinkRepeatProblem *link_repeat_problem = new LinkRepeatProblem(new LinkRepeatDomain(2000));
-    BackwardPlanner planner(link_repeat_problem);
     std::cout << "GO!" << std::endl;
     Domain *depots = new DepotsDomain(1000, 1000, 1000);
-    std::vector<std::string> actions = planner.search();
-    for(int i = 0; i < actions.size(); i++)
-    {
-        std::cout << std::to_string(i + 1) << ". " << actions[i] << std::endl;
-    }
     std::cout << "DONE!" << std::endl;
     int sdf = 2;
 }
