@@ -70,6 +70,7 @@ void DepotsDomain::define_actions()
     define_drive_actions();
     define_lift_actions();
     define_drop_actions();
+    define_load_actions();
 }
 
 void DepotsDomain::define_drive_actions()
@@ -139,6 +140,23 @@ void DepotsDomain::define_drop_actions()
                 for(std::string location : this->object_containers["locations"])
                 {
                     add_drop_action(hoist, crate, surface, location);
+                }
+            }
+        }
+    }
+}
+
+void DepotsDomain::define_load_actions()
+{
+    for(std::string hoist : this->object_containers["hoists"])
+    {
+        for(std::string crate : this->object_containers["crates"])
+        {
+            for(std::string truck : this->object_containers["trucks"])
+            {
+                for(std::string location : this->object_containers["locations"])
+                {
+                    add_load_action(hoist, crate, truck, location);
                 }
             }
         }
