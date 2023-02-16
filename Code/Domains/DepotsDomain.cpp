@@ -71,6 +71,7 @@ void DepotsDomain::define_actions()
     define_lift_actions();
     define_drop_actions();
     define_load_actions();
+    define_unload_actions();
 }
 
 void DepotsDomain::define_drive_actions()
@@ -163,6 +164,23 @@ void DepotsDomain::define_load_actions()
     }
 }
 
+void DepotsDomain::define_unload_actions()
+{
+    for(std::string hoist : this->object_containers["hoists"])
+    {
+        for(std::string crate : this->object_containers["crates"])
+        {
+            for(std::string truck : this->object_containers["trucks"])
+            {
+                for(std::string location : this->object_containers["locations"])
+                {
+                    add_unload_action(hoist, crate, truck, location);
+                }
+            }
+        }
+    }
+}
+
 void DepotsDomain::add_drive_action(std::string &truck, std::string &location_1, std::string &location_2)
 {
     std::string drive_action_name = "Drive(" + truck + ", " + location_1 + ", " + location_2 + ")";
@@ -223,4 +241,20 @@ void DepotsDomain::add_load_action(std::string &hoist, std::string &crate, std::
     {in_crate_truck, available_hoist}, {lifting_hoist_crate});
 
     this->actions.push_back(load_action);
+}
+
+void DepotsDomain::add_unload_action(std::string &hoist, std::string &crate, std::string &truck, std::string &location)
+{
+    std::string unload_action_name = "Unload(" + hoist + ", " + crate + ", " + truck + ", " + location + ")";
+
+    Predicate at_hoist_location(this->codes["At"], {this->codes[hoist], this->codes[location]});
+    Predicate at_truck_location(this->codes["At"], {this->codes[truck], this->codes[location]});
+    Predicate available_hoist(this->codes["Available"], {this->codes[hoist]});
+    Predicate in_crate_truck(this->codes["In"], {this->codes[crate], this->codes[truck]});
+    Predicate lifting_hoist_crate(this->codes["Lifting"], {this->codes[hoist], this->codes[crate]});
+
+    Action unload_action(unload_action_name, {at_hoist_location, at_truck_location, available_hoist, in_crate_truck}, {},
+    {lifting_hoist_crate}, {in_crate_truck, available_hoist});
+
+    this->actions.push_back(unload_action);
 }
