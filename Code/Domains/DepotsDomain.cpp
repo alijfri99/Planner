@@ -190,3 +190,19 @@ void DepotsDomain::add_drop_action(std::string &hoist, std::string &crate, std::
 
     this->actions.push_back(drop_action);
 }
+
+void DepotsDomain::add_load_action(std::string &hoist, std::string &crate, std::string &truck, std::string &location)
+{
+    std::string load_action_name = "Load(" + hoist + ", " + crate + ", " + truck + ", " + location + ")";
+
+    Predicate at_hoist_location(this->codes["At"], {this->codes[hoist], this->codes[location]});
+    Predicate at_truck_location(this->codes["At"], {this->codes[truck], this->codes[location]});
+    Predicate lifting_hoist_crate(this->codes["Lifting"], {this->codes[hoist], this->codes[crate]});
+    Predicate in_crate_truck(this->codes["In"], {this->codes[crate], this->codes[truck]});
+    Predicate available_hoist(this->codes["Available"], {this->codes[hoist]});
+
+    Action load_action(load_action_name, {at_hoist_location, at_truck_location, lifting_hoist_crate}, {}, 
+    {in_crate_truck, available_hoist}, {lifting_hoist_crate});
+
+    this->actions.push_back(load_action);
+}
