@@ -28,3 +28,7 @@ int LinkRepeatDomain::get_size() const
 {
     return this->size;
 }
+
+void LinkRepeatDomain::define_predicate_names() {}
+void LinkRepeatDomain::define_objects() {}
+void LinkRepeatDomain::define_actions() {}

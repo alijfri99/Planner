@@ -4,24 +4,42 @@ TireDomain::TireDomain()
 {
     this->name = "Tire Domain";
 
-    std::vector<std::string> tires = {"Flat", "Spare"};
-    std::vector<std::string> locations = {"Axle", "Trunk"};
-    std::unordered_map<std::string, std::string> other;
+    this->object_containers["tires"];
+    this->object_containers["locations"];
 
-    other["Flat"] = "Spare";
-    other["Spare"] = "Flat";
+    define_predicate_names();
+    define_objects();
+    define_actions();
+}
 
+void TireDomain::define_predicate_names()
+{
     add_word("Ground");
     add_word("Flat");
     add_word("Spare");
     add_word("Axle");
     add_word("Trunk");
     add_word("At");
+}
 
-    for(std::string tire : tires)
+void TireDomain::define_objects()
+{
+    this->object_containers["tires"].push_back("Flat");
+    this->object_containers["tires"].push_back("Spare");
+    this->object_containers["locations"].push_back("Axle");
+    this->object_containers["locations"].push_back("Trunk");
+}
+
+void TireDomain::define_actions()
+{
+    std::unordered_map<std::string, std::string> other;
+    other["Flat"] = "Spare";
+    other["Spare"] = "Flat";
+
+    for(std::string tire : this->object_containers["tires"])
     {
         Predicate at_tire_ground(this->codes["At"], {this->codes[tire], this->codes["Ground"]});
-        for(std::string location : locations)
+        for(std::string location : this->object_containers["locations"])
         {
             std::string remove_action_name = "Remove(" + tire + ", " + location + ")";
             std::string put_action_name = "Put(" + tire + ", " + location + ")";        
