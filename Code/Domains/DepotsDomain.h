@@ -15,6 +15,7 @@ private:
     void define_drive_actions();
     void define_lift_actions();
     void define_drop_actions();
+    void define_load_actions();
     void add_drive_action(std::string &truck, std::string &location_1, std::string &location_2);
     void add_lift_action(std::string &hoist, std::string &crate, std::string &surface, std::string &location);
     void add_drop_action(std::string &hoist, std::string &crate, std::string &surface, std::string &location);
